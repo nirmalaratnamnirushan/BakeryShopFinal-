@@ -1,0 +1,71 @@
+<%- include('layout/header')%>
+
+    <div class="container">
+        <div class="row my-4">
+            <div class="col-lg-12">
+                <% if (message) { %>
+                    <div class="alert alert-dismissible fade show alert-<%= message.type %>" role="alert">
+                        <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
+                        <strong><%= message.message %></strong>
+                    </div>
+                    <script>
+                        document.addEventListener("DOMContentLoaded", function() {
+                            setTimeout(() => {
+                                let flashMessage = document.getElementById("flash-message");
+                                if (flashMessage) {
+                                    flashMessage.style.opacity = "0";
+                                    setTimeout(() => flashMessage.style.display = "none", 500);
+                                }
+                            }, <%= message.duration || 2000 %>); // Default to 2 seconds if no duration is set
+                        });
+                    </script>
+
+
+                    <% } %>
+                        <div class="table-responsive">
+                            <% if(items != '') { %>
+                                <table class="table table-striped text-center my-3">
+                                    <thead>
+                                        <tr class="table-dark">
+                                            <th class="text-center">ID</th>
+                                            <th class="text-center">Image</th>
+                                            <th class="text-center">Name</th>
+                                            <th class="text-center">Price</th>
+                                            <th class="text-center">Quantity</th>
+                                            <th class="text-center">Action</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <% items.forEach((row, index) => { %>
+                                            <tr class="align-middle text-center">
+                                                <td style="text-align: center;">
+                                                    <%= index %>
+                                                </td>
+                                                <td><img src="<%= row.image %>" width="100" class="img-thumbnail" /></td>
+                                                <td>
+                                                    <%= row.name %>
+                                                </td>
+                                                <td>
+                                                    <%= row.price %>
+                                                </td>
+                                                <td style="text-align: center;">
+                                                    <%= row.quantity %>
+                                                </td>
+                                                <td>
+                                                    <a href="/edit/<%= row._id %>" class="text-success"><i class="fas fa-edit fa-lg mx-1"></i></a>
+                                                    <a href="/delete/<%= row._id %>" class="text-danger"><i class="fas fa-trash fa-lg mx-1"></i></a>
+                                                </td>
+                                            </tr>
+                                            <% }) %>
+                                    </tbody>
+                                </table>
+                                <% } else { %>
+                                    <h1 class="text-center text-secondary mt-5">No items found in the database!</h1>
+                                    <% } %>
+                        </div>
+            </div>
+        </div>
+    </div>
+
+    <%- include('layout/footer')%>
