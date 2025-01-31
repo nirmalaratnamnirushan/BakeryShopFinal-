@@ -5,10 +5,10 @@ const User = require("../models/consumer");
 const router = express.Router();
 
 // JWT secret key
-const JWT_SECRET = "akee123"; // Replace with a strong secret key
+const JWT_SECRET = "niru0304"; // Replace with a strong secret key
 
 // Register User
-router.post("/register", async (req, res) => {
+router.post("/register", async(req, res) => {
     try {
         const { name, email, password } = req.body;
 
@@ -30,7 +30,7 @@ router.post("/register", async (req, res) => {
 });
 
 // Login User
-router.post("/login", async (req, res) => {
+router.post("/login", async(req, res) => {
     try {
         const { email, password } = req.body;
 
@@ -57,7 +57,7 @@ router.post("/login", async (req, res) => {
 
 // Middleware to Protect Routes
 function verifyToken(req, res, next) {
-    const token = req.headers.authorization?.split(" ")[1]; // Expecting "Bearer <token>"
+    const token = req.headers.authorization ?.split(" ")[1]; // Expecting "Bearer <token>"
     if (!token) {
         return res.status(401).json({ message: "Access denied. No token provided." });
     }
@@ -72,7 +72,7 @@ function verifyToken(req, res, next) {
 }
 
 // Protected Route Example
-router.get("/dashboard", verifyToken, async (req, res) => {
+router.get("/dashboard", verifyToken, async(req, res) => {
     const user = await User.findById(req.user.id);
     if (!user) {
         return res.status(404).json({ message: "User not found!" });
@@ -82,7 +82,7 @@ router.get("/dashboard", verifyToken, async (req, res) => {
 
 
 
-router.post("/signup", async (req, res) => {
+router.post("/signup", async(req, res) => {
     try {
         const { name, email, password } = req.body;
 
@@ -101,7 +101,7 @@ router.post("/signup", async (req, res) => {
 
 
 // Register User
-router.post("/register", async (req, res) => {
+router.post("/register", async(req, res) => {
     try {
         const { name, email, password } = req.body;
         const hashedPassword = await bcrypt.hash(password, 10);
@@ -114,7 +114,7 @@ router.post("/register", async (req, res) => {
 });
 
 // Login User
-router.post("/login", async (req, res) => {
+router.post("/login", async(req, res) => {
     try {
         const { email, password } = req.body;
         const user = await User.findOne({ email });
@@ -138,14 +138,3 @@ router.get("/logout", (req, res) => {
 });
 
 module.exports = router;
-
-
-
-
-
-
-
-
-
-
-
